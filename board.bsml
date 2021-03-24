@@ -1,0 +1,13 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+  <!--
+  <text anchor-pos-y='10.0' text='InSongLeaderboard'></text>
+    <horizontal anchor-pos-y='5.0'> 
+  <text text='LeaderBoard Text 1'/>
+  <text align='Right' text='99999999'/>
+    </horizontal> 
+    <text anchor-pos-y='0.0' text='LeaderBoard Text 2'/>
+    <text anchor-pos-y='-5.0' text='LeaderBoard Text 3'/>
+    -->
+<leaderboard id='songLeaderboard' anchor-pos-y='-10'></leaderboard>
+
+</bg>
