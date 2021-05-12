@@ -108,7 +108,7 @@ namespace InSongLeaderboard
         }
         private void BSEvents_GameSceneLoaded()
         {
-            if (!BS_Utils.Plugin.LevelData.IsSet || BS_Utils.Plugin.LevelData.Mode != BS_Utils.Gameplay.Mode.Standard)
+            if (!BS_Utils.Plugin.LevelData.IsSet || BS_Utils.Plugin.LevelData.Mode != BS_Utils.Gameplay.Mode.Standard || !PluginConfig.Instance.enabled)
                 return;
             var scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().LastOrDefault();
             if (scoreController == null) return;
