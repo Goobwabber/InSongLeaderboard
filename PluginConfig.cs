@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 namespace InSongLeaderboard
 {
     public class PluginConfig
     {
-        public static PluginConfig Instance { get; set; }
+        public static PluginConfig Instance { get; set; } = null!;
         public bool enabled { get; set; } = true;
         public bool sortByAcc { get; set; } = true;
         public bool simpleNames { get; set; } = false;

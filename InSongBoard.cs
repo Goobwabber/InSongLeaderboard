@@ -15,7 +15,7 @@ namespace InSongLeaderboard
     public class InSongBoard : MonoBehaviour, INotifyPropertyChanged
     {
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             try
@@ -29,7 +29,7 @@ namespace InSongLeaderboard
             }
         }
         [UIComponent("songLeaderboard")]
-        internal LeaderboardTableView leaderboardTableView;
+        internal LeaderboardTableView leaderboardTableView = null!;
         internal List<LeaderboardTableView.ScoreData> currentScores = new List<LeaderboardTableView.ScoreData>();
         private bool _init = false;
         private float _timer = 0f;

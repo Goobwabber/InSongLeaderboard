@@ -2,17 +2,13 @@
 using IPALogger = IPA.Logging.Logger;
 using HarmonyLib;
 using IPA.Config.Stores;
-using IPA.Config;
 using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.FloatingScreen;
-using BeatSaberMarkupLanguage.Components;
 using UnityEngine;
 using UnityEngine.UI;
 using HMUI;
 using System.Linq;
 using System.Reflection;
 using TMPro;
-using System.Collections;
 using System.Collections.Generic;
 namespace InSongLeaderboard
 {
@@ -24,8 +20,8 @@ namespace InSongLeaderboard
         public static int currentPlayerScore = 0;
         public static int currentMaxPossibleScore = 0;
         public static int maxPossibleScore = 0;
-        internal static Plugin Instance { get; private set; }
-        internal static IPALogger log { get; set; }
+        internal static Plugin? Instance { get; private set; }
+        internal static IPALogger? log { get; set; }
 
         [Init]
         public Plugin(IPALogger logger, IPA.Config.Config config)
@@ -82,7 +78,7 @@ namespace InSongLeaderboard
             // Leaderboard.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1f);
             // Leaderboard.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1f);
 
-            GameObject coreGameHUD = Resources.FindObjectsOfTypeAll<CoreGameHUDController>()?.FirstOrDefault(x => x.isActiveAndEnabled)?.gameObject ?? null;
+            GameObject? coreGameHUD = Resources.FindObjectsOfTypeAll<CoreGameHUDController>()?.FirstOrDefault(x => x.isActiveAndEnabled)?.gameObject ?? null;
             FlyingGameHUDRotation flyingGameHUD = Resources.FindObjectsOfTypeAll<FlyingGameHUDRotation>().FirstOrDefault(x => x.isActiveAndEnabled);
             if (coreGameHUD != null)
                 Leaderboard.transform.SetParent(coreGameHUD.transform, true);
@@ -116,11 +112,11 @@ namespace InSongLeaderboard
             //Reset score values
             currentPlayerScore = 0;
             currentMaxPossibleScore = 0;
-            maxPossibleScore = ScoreModel.MaxRawScoreForNumberOfNotes(BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData.difficultyBeatmap.beatmapData.cuttableNotesType);
+            maxPossibleScore = scoreController.immediateMaxPossibleModifiedScore;
             //Create board
             var boardHandler = SetupLeaderboardObject();
             //Setup events
-            scoreController.immediateMaxPossibleScoreDidChangeEvent += ScoreController_immediateMaxPossibleScoreDidChangeEvent;
+            scoreController.scoreDidChangeEvent += ScoreController_scoreDidChangeEvent;
             scoreController.scoreDidChangeEvent += delegate(int score,int modifiedScore) { ScoreController_scoreDidChangeEvent(score, modifiedScore, boardHandler); };
 
         }
@@ -135,7 +131,7 @@ namespace InSongLeaderboard
         //    leaderboard.UpdateScores();
         }
 
-        private void ScoreController_immediateMaxPossibleScoreDidChangeEvent(int arg1, int arg2)
+        private void ScoreController_scoreDidChangeEvent(int arg1, int arg2)
         {
           //  log.Debug("Max Score Update: " + arg1);
             currentMaxPossibleScore = arg1;
@@ -175,7 +171,7 @@ namespace InSongLeaderboard
                                 {
                                     if (text.text.Contains("<size=85%>"))
                                     {
-                                        Plugin.log.Info("1 " + playerName);
+                                        Plugin.log!.Info("1 " + playerName);
                                         var splitText = text.text.Split('>', '<');
                                         playerName = splitText[2];
                                         if (string.IsNullOrWhiteSpace(playerName) && splitText.Length >= 5)
@@ -219,7 +215,7 @@ namespace InSongLeaderboard
                 }
                 catch(System.Exception ex)
                 {
-                    Plugin.log.Error($"Failed to grab scores from Leaderboard {ex}");
+                    Plugin.log!.Error($"Failed to grab scores from Leaderboard {ex}");
                 }
             }
              
